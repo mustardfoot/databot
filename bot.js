@@ -364,12 +364,12 @@ addcommand("commands",["cmds","help","?"],"This command displays all the command
 });
 
 addcommand("credits",["creator"],"Tells you who's the super cool boi who made this bot.","",function(args,message){
-    message.channel.send("the supa cool guy who made this bot is ...");
+    message.channel.send("the supa cool guy who made this bot is ...")
     .then((msg) => {
       if(msg){
         msg.edit("the supa cool guy who made this bot is <@447043299858055170>")
       }
-    })
+    });
 });
 
 addcommand("unmute",[],"This command unmutes a user who was previously muted.","Server Moderator",function(args,message){
