@@ -3,8 +3,8 @@ const Trello = require("node-trello");
 const t = new Trello(process.env.T_KEY,process.env.T_TOKEN);
 const client = new Discord.Client();
 var pref = "!"
-var sEmoji;
-var fEmoji;
+var sEmoji = "";
+var fEmoji = "";
 var guild;
 var commands = [];
 
@@ -597,8 +597,18 @@ client.on('message', function(message) {
   if (message.author.equals(client.user)) return;
   var args = message.content.substring(pref.length).split(" ");
   if (!message.content.startsWith(pref)) return;
-  sEmoji = client.emojis.find("name", "botGood").toString()
-  fEmoji = client.emojis.find("name", "botBad").toString()
+  var yespapa = guild.emojis.find("name","botGood")
+  var nopapa = guild.emojis.find("name","botBad")
+  if(yespapa === null){
+    guild.createEmoji('https://i.imgur.com/1IvY39Q.png', 'botGood')
+  }else{
+    sEmoji = yespapa.toString()
+  }
+  if(nopapa === null){
+    guild.createEmoji('https://i.imgur.com/SuWr1CZ.png', 'botBad')
+  }else{
+    fEmoji = nopapa.toString()
+  }
   var saidcommand = args[0].toLowerCase()
   var alreadycommanded = false;
   commands.forEach(function(command){
@@ -713,5 +723,22 @@ var myInterval = setInterval(function() {
   }
 });
 }, 5000);
-
 client.login(process.env.BOT_TOKEN);
+
+client.guilds.forEach(function(g){
+  if(g.id === process.env.SERVER_ID){
+    guild = g;
+    var yespapa = g.emojis.find("name","botGood")
+    var nopapa = g.emojis.find("name","botBad")
+    if(yespapa === null){
+      g.createEmoji('https://i.imgur.com/1IvY39Q.png', 'botGood')
+    }else{
+      sEmoji = yespapa.toString()
+    }
+    if(nopapa === null){
+      g.createEmoji('https://i.imgur.com/SuWr1CZ.png', 'botBad')
+    }else{
+      fEmoji = nopapa.toString()
+    }
+  }
+});
