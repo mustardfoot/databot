@@ -586,10 +586,6 @@ client.on('ready', () => {
   .catch(console.error);
 });
 
-client.on('messageUpdate', (omessage, message) => {
-  checkpermit(message,omessage);
-});
-
 client.on('message', function(message) {
   if(!guild){
     client.guilds.forEach(function(g){
@@ -599,11 +595,7 @@ client.on('message', function(message) {
     });
   }
   if (message.author.equals(client.user)) return;
-  checkpermit(message);
   var args = message.content.substring(pref.length).split(" ");
-  if(message.content.toLowerCase().indexOf('this is so sad') !== -1){
-    message.channel.send(':musical_note: **Now playing Despacito.**')
-  }
   if (!message.content.startsWith(pref)) return;
   sEmoji = client.emojis.find("name", "botGood").toString()
   fEmoji = client.emojis.find("name", "botBad").toString()
