@@ -301,7 +301,6 @@ addcommand("warn",[],"This command will give a user a warning that can be viewed
 });
 
 addcommand("say",["botsay","botchat"],"This will make the bot say whatever you want; the message and the author will be visible in logs.","Contributor",function(args,message){
-  console.log(message.content.toLowerCase());
   if(message.guild && message.guild === guild && message.content.toLowerCase().indexOf('@everyone') === -1 && message.content.toLowerCase().indexOf('@here') === -1){
     if(args[1]){
       var reason = "";
