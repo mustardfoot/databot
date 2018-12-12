@@ -83,7 +83,7 @@ addcommand("ban",["bean"],"This command will ban someone from joining the server
                 });
               }
               mentionedmember.user.createDM().then((boi) => {
-                boi.send('**You have been banned from the server for ['+reason+']**')
+                boi.send('**You have been banned from the server for [**'+reason+'**]**')
                 .then(() => {
                   guild.ban(mentionedmember,{reason: reason})
                 })
@@ -195,7 +195,7 @@ addcommand("kick",[],"This command will kick someone out of the server.","Server
               });
             }
             mentionedmember.user.createDM().then((boi) => {
-              boi.send('**You have been kicked from the server for ['+reason+']**')
+              boi.send('**You have been kicked from the server for [**'+reason+'**]**')
               .then(() => {
                 mentionedmember.kick()
               })
