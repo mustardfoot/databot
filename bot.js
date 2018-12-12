@@ -311,12 +311,13 @@ addcommand("say",["botsay","botchat"],"This will make the bot say whatever you w
           reason = arg
         }
       });
+      var chanid = message.channel.id;
       message.channel.send(reason)
       .then(() => {
         message.delete();
       });
       guild.channels.forEach(function(channel){
-        if(channel.name === "🤖bot-blast"){
+        if(channel.name === "🛑databot-logs"){
           channel.send({"embed": {
             "description":"Bot Chat",
             "timestamp": new Date(),
@@ -330,6 +331,10 @@ addcommand("say",["botsay","botchat"],"This will make the bot say whatever you w
               {
                 "name": "Message",
                 "value": reason
+              },
+              {
+                "name": "Channel",
+                "value": "<#"+chanid+">"
               }
             ]
           }})
