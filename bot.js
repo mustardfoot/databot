@@ -84,7 +84,12 @@ addcommand("ban",["bean"],"This command will ban someone from joining the server
               }
               mentionedmember.user.createDM().then((boi) => {
                 boi.send('**You have been banned from the server for ['+reason+']**')
-                guild.ban(mentionedmember,{reason: reason})
+                .then(() => {
+                  guild.ban(mentionedmember,{reason: reason})
+                })
+                .catch(() => {
+                  guild.ban(mentionedmember,{reason: reason})
+                })
                 message.channel.send(sEmoji+" **<@"+mentionedmember.id+"> has been banned.**");
                 guild.channels.forEach(function(channel){
                   if(channel.name === "logs"){
@@ -191,7 +196,12 @@ addcommand("kick",[],"This command will kick someone out of the server.","Server
             }
             mentionedmember.user.createDM().then((boi) => {
               boi.send('**You have been kicked from the server for ['+reason+']**')
-              mentionedmember.kick()
+              .then(() => {
+                mentionedmember.kick()
+              })
+              .catch(() => {
+                mentionedmember.kick()
+              })
               message.channel.send(sEmoji+" **<@"+mentionedmember.id+"> has been kicked.**");
               guild.channels.forEach(function(channel){
                 if(channel.name === "logs"){
