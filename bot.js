@@ -305,11 +305,10 @@ addcommand("say",["botsay","botchat"],"This will make the bot say whatever you w
     if(args[1]){
       var reason = "";
       args.forEach(function(arg,n){
-        if(n > 1){
-          if(n > 2){
-            reason = reason+" "
-          }
-          reason = reason+arg
+        if(n !== 1){
+          reason = reason+" "+arg
+        }else{
+          reason = arg
         }
       });
       message.channel.send(reason)
@@ -324,13 +323,8 @@ addcommand("say",["botsay","botchat"],"This will make the bot say whatever you w
             "color": 1819163,
             "fields": [
               {
-                "name": "Staff Member",
+                "name": "Author",
                 "value": "<@"+message.author.id+">",
-                "inline": true
-              },
-              {
-                "name": "User",
-                "value": "<@"+mentionedmember.id+">",
                 "inline": true
               },
               {
