@@ -306,9 +306,11 @@ addcommand("say",["botsay","botchat"],"This will make the bot say whatever you w
       var reason = "";
       args.forEach(function(arg,n){
         if(n > 1){
-          reason = reason+" "
+          if(n > 2){
+            reason = reason+" "
+          }
+          reason = reason+arg
         }
-        reason = reason+arg
       });
       message.channel.send(reason)
       .then(() => {
