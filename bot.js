@@ -240,6 +240,115 @@ addcommand("kick",[],"This command will kick someone out of the server.","Server
   }
 });
 
+addcommand("warn",[],"This command will give a user a warning that can be viewed in the logs.","Server Moderator",function(args,message){
+  if(message.guild && message.guild === guild){
+    if(args[1]){
+      var mentionedmember = getmemberfromid(args[1]);
+      if (mentionedmember){
+        if(mentionedmember.user !== client.user){
+          if(message.member && message.member.highestRole.comparePositionTo(mentionedmember.highestRole) > 0){
+            var reason = "No Reason Provided"
+            if(args[2]){
+              reason = "";
+              args.forEach(function(arg,n){
+                if(n > 1){
+                  if(n > 2){
+                    reason = reason+" "
+                  }
+                  reason = reason+arg
+                }
+              });
+            }
+            mentionedmember.user.createDM().then((boi) => {
+              boi.send('**You have been given a warning for [**'+reason+'**]**')
+              mentionedmember.addRole(guild.roles.find("name","Warning"))
+              message.channel.send(sEmoji+" **<@"+mentionedmember.id+"> has been given a warning.**");
+              guild.channels.forEach(function(channel){
+                if(channel.name === "logs"){
+                  channel.send({"embed": {
+                    "description":"Warning",
+                    "timestamp": new Date(),
+                    "color": 1819163,
+                    "fields": [
+                      {
+                        "name": "Staff Member",
+                        "value": "<@"+message.author.id+">",
+                        "inline": true
+                      },
+                      {
+                        "name": "User",
+                        "value": "<@"+mentionedmember.id+">",
+                        "inline": true
+                      },
+                      {
+                        "name": "Reason",
+                        "value": reason
+                      }
+                    ]
+                  }})
+                }
+              });
+            });
+          }else{
+            message.channel.send("**"+fEmoji+" You are not able to moderate this user.**")
+          }
+        }else{
+          message.channel.send("**"+fEmoji+" I did nothing wrong! :(**")
+        }
+      }
+    }
+  }
+});
+
+addcommand("unwarn",["removewarning","revokewarning"],"This command will give a user a warning that can be viewed in the logs.","Server Moderator",function(args,message){
+  if(message.guild && message.guild === guild){
+    if(args[1]){
+      var mentionedmember = getmemberfromid(args[1]);
+      if (mentionedmember){
+        if(mentionedmember.user !== client.user){
+          if(message.member && message.member.highestRole.comparePositionTo(mentionedmember.highestRole) > 0){
+            mentionedmember.user.createDM().then((boi) => {
+              boi.send('**Your warning has been removed.**')
+              var roles = mentionedmember.roles
+              roles.forEach(function(role){
+                if (role.name === "Warning") {
+                  mentionedmember.removeRole(role)
+                }
+              })
+              message.channel.send(sEmoji+" **<@"+mentionedmember.id+">'s warning has been removed.**");
+              guild.channels.forEach(function(channel){
+                if(channel.name === "logs"){
+                  channel.send({"embed": {
+                    "description":"Warning Removed",
+                    "timestamp": new Date(),
+                    "color": 1819163,
+                    "fields": [
+                      {
+                        "name": "Staff Member",
+                        "value": "<@"+message.author.id+">",
+                        "inline": true
+                      },
+                      {
+                        "name": "User",
+                        "value": "<@"+mentionedmember.id+">",
+                        "inline": true
+                      }
+                    ]
+                  }})
+                }
+              });
+            });
+          }else{
+            message.channel.send("**"+fEmoji+" You are not able to moderate this user.**")
+          }
+        }else{
+          message.channel.send("**"+fEmoji+" I don't even have a warning in the first place.**")
+        }
+      }
+    }
+  }
+});
+
 addcommand("commands",["cmds","help","?"],"This command displays all the commands avaliable for use by the user running the command. Supplying it with a command to look up will provide further detail on said command.","",function(args,message){
     if(message.guild && message.guild === guild){
       if(!args[1]){
@@ -403,7 +512,7 @@ addcommand("unmute",[],"This command unmutes a user who was previously muted.","
             })
             var roles = mentionedmember.roles
             roles.forEach(function(role){
-              if (role.name === "muted") {
+              if (role.name === "Muted") {
                 mentionedmember.removeRole(role)
               }
             })
@@ -529,9 +638,9 @@ addcommand("mute",[],"Prevents the specified user from speaking in text and voic
                     }
                   })
                   t.post('/1/cards?name='+mentionedmember.id+'&desc='+time+'&pos=top&idList='+hwids,function(err,returns){
-                    if(guild.roles.find("name","muted")){
+                    if(guild.roles.find("name","Muted")){
                       var good = true;
-                      mentionedmember.addRole(guild.roles.find("name","muted"))
+                      mentionedmember.addRole(guild.roles.find("name","Muted"))
                       .catch(() => {
                         good = false;
                         message.channel.send("**"+fEmoji+" There has been an error giving the user the muted role. Please attempt to re-mute them.**")
@@ -702,7 +811,7 @@ var myInterval = setInterval(function() {
                       if(muser){
                         var roles = muser.roles
                         roles.forEach(function(role){
-                          if (role.name === "muted") {
+                          if (role.name === "Muted") {
                             muser.removeRole(role)
                             muser.createDM().then((boi) => {
                               boi.send('**Your mute time has run out and you have been unmuted in the server. You may now talk again.**')
@@ -735,8 +844,8 @@ var myInterval = setInterval(function() {
                   if(thatuser && thatuser !== undefined){
                     guild.fetchMember(thatuser).then((muser) => {
                       if(muser && muser !== undefined){
-                        if (guild.roles.find("name","muted")) {
-                          muser.addRole(guild.roles.find("name","muted"))
+                        if (guild.roles.find("name","Muted")) {
+                          muser.addRole(guild.roles.find("name","Muted"))
                         }
                       }
                     })
