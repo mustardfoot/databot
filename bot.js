@@ -260,7 +260,7 @@ addcommand("warn",[],"This command will give a user a warning that can be viewed
               });
             }
             mentionedmember.user.createDM().then((boi) => {
-              boi.send('**You have been given a warning for [**'+reason+'**]**')
+              boi.send("**You have been given a warning for [**'+reason+'**]. Don't do it again.**")
               mentionedmember.addRole(guild.roles.find("name","Warning"))
               message.channel.send(sEmoji+" **<@"+mentionedmember.id+"> has been given a warning.**");
               guild.channels.forEach(function(channel){
