@@ -91,6 +91,7 @@ addcommand("ban",["bean"],"This command will ban someone from joining the server
                     channel.send({"embed": {
                       "description":"Ban",
                       "timestamp": new Date(),
+                      "color": 1819163,
                       "fields": [
                         {
                           "name": "Staff Member",
@@ -138,6 +139,7 @@ addcommand("ban",["bean"],"This command will ban someone from joining the server
                 channel.send({"embed": {
                   "description":"Ban",
                   "timestamp": new Date(),
+                  "color": 1819163,
                   "fields": [
                     {
                       "name": "Staff Member",
@@ -196,6 +198,7 @@ addcommand("kick",[],"This command will kick someone out of the server.","Server
                   channel.send({"embed": {
                     "description":"Kick",
                     "timestamp": new Date(),
+                    "color": 1819163,
                     "fields": [
                       {
                         "name": "Staff Member",
@@ -250,6 +253,7 @@ addcommand("commands",["cmds","help","?"],"This command displays all the command
         message.channel.send({"embed": {
           "title": "You have access to ("+commandsamount+") commands",
           "description": "``"+viablecommands+"``",
+          "color": 1819163,
           "footer": {
             "text": "To learn more about a command, say !help [command name] and you will be shown more information about it."
           }
@@ -285,6 +289,7 @@ addcommand("commands",["cmds","help","?"],"This command displays all the command
                 if(command.minrank === ""){
                   message.channel.send({"embed": {
                   	"description": "`Displaying Info About: ["+capitalizeFirstLetter(command.name)+"]`",
+                    "color": 1819163,
                   	"fields": [
                   		{
                   			"name": "Aliases:",
@@ -310,6 +315,7 @@ addcommand("commands",["cmds","help","?"],"This command displays all the command
                           if(theirmember.highestRole.comparePositionTo(guild.roles.find("name",command.minrank)) >= 0){
                             message.channel.send({"embed": {
                               "description": "`Displaying Info About: ["+capitalizeFirstLetter(command.name)+"]`",
+                              "color": 1819163,
                               "fields": [
                                 {
                                   "name": "Aliases:",
@@ -387,6 +393,7 @@ addcommand("unmute",[],"This command unmutes a user who was previously muted.","
                 channel.send({"embed": {
                   "description":"Unmute",
                   "timestamp": new Date(),
+                  "color": 1819163,
                   "fields": [
                     {
                       "name": "Staff Member",
@@ -523,6 +530,7 @@ addcommand("mute",[],"Prevents the specified user from speaking in text and voic
                               channel.send({"embed": {
                                 "description":"Mute",
                                 "timestamp": new Date(),
+                                "color": 1819163,
                                 "fields": [
                                   {
                                     "name": "Staff Member",
@@ -685,6 +693,7 @@ var myInterval = setInterval(function() {
                                 channel.send({"embed": {
                                   "description":"Automatic Unmute",
                                   "timestamp": new Date(),
+                                  "color": 1819163,
                                   "fields": [
                                     {
                                       "name": "User",
