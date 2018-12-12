@@ -316,7 +316,7 @@ addcommand("say",["botsay","botchat"],"This will make the bot say whatever you w
         message.delete();
       });
       guild.channels.forEach(function(channel){
-        if(channel.name === "🛑mod-logs"){
+        if(channel.name === "🤖bot-blast"){
           channel.send({"embed": {
             "description":"Bot Chat",
             "timestamp": new Date(),
