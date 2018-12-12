@@ -300,6 +300,49 @@ addcommand("warn",[],"This command will give a user a warning that can be viewed
   }
 });
 
+addcommand("say",["botsay","botchat"],"This will make the bot say whatever you want; the message and the author will be visible in logs.","Contributor",function(args,message){
+  if(message.guild && message.guild === guild){
+    if(args[1]){
+      var reason = "";
+      args.forEach(function(arg,n){
+        if(n > 1){
+          reason = reason+" "
+        }
+        reason = reason+arg
+      });
+      message.channel.send(reason)
+      .then(() => {
+        message.delete();
+      });
+      guild.channels.forEach(function(channel){
+        if(channel.name === "🛑mod-logs"){
+          channel.send({"embed": {
+            "description":"Bot Chat",
+            "timestamp": new Date(),
+            "color": 1819163,
+            "fields": [
+              {
+                "name": "Staff Member",
+                "value": "<@"+message.author.id+">",
+                "inline": true
+              },
+              {
+                "name": "User",
+                "value": "<@"+mentionedmember.id+">",
+                "inline": true
+              },
+              {
+                "name": "Message",
+                "value": reason
+              }
+            ]
+          }})
+        }
+      });
+    }
+  }
+});
+
 addcommand("unwarn",["removewarnings","revokewarnings","clearwarnings"],"This command will remove a user's warning role, should only be used if all of a user's warnings were invalid or very old.","Server Moderator",function(args,message){
   if(message.guild && message.guild === guild){
     if(args[1]){
