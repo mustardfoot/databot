@@ -1,6 +1,6 @@
 {
-  "name": "Test",
-  "description": "Test",
+  "name": "DataBot",
+  "description": "a mod bot for databrawl",
   "version": "0.0.0",
   "main": "bot.js",
   "scripts": {
