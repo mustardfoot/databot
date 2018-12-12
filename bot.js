@@ -300,7 +300,7 @@ addcommand("warn",[],"This command will give a user a warning that can be viewed
   }
 });
 
-addcommand("unwarn",["removewarnings","revokewarnings","clearwarnings"],"This command will give a user a warning that can be viewed in the logs.","Server Moderator",function(args,message){
+addcommand("unwarn",["removewarnings","revokewarnings","clearwarnings"],"This command will remove a user's warning role, should only be used if all of a user's warnings were invalid or very old.","Server Moderator",function(args,message){
   if(message.guild && message.guild === guild){
     if(args[1]){
       var mentionedmember = getmemberfromid(args[1]);
