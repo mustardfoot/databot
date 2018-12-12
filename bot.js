@@ -92,7 +92,7 @@ addcommand("ban",["bean"],"This command will ban someone from joining the server
                 })
                 message.channel.send(sEmoji+" **<@"+mentionedmember.id+"> has been banned.**");
                 guild.channels.forEach(function(channel){
-                  if(channel.name === "logs"){
+                  if(channel.name === "🛑logs"){
                     channel.send({"embed": {
                       "description":"Ban",
                       "timestamp": new Date(),
@@ -140,7 +140,7 @@ addcommand("ban",["bean"],"This command will ban someone from joining the server
             guild.ban(mentioneduser,{reason: reason})
             message.channel.send(sEmoji+" **"+mentioneduser.tag+" has been banned.**");
             guild.channels.forEach(function(channel){
-              if(channel.name === "logs"){
+              if(channel.name === "🛑logs"){
                 channel.send({"embed": {
                   "description":"Ban",
                   "timestamp": new Date(),
@@ -204,7 +204,7 @@ addcommand("kick",[],"This command will kick someone out of the server.","Server
               })
               message.channel.send(sEmoji+" **<@"+mentionedmember.id+"> has been kicked.**");
               guild.channels.forEach(function(channel){
-                if(channel.name === "logs"){
+                if(channel.name === "🛑logs"){
                   channel.send({"embed": {
                     "description":"Kick",
                     "timestamp": new Date(),
@@ -264,7 +264,7 @@ addcommand("warn",[],"This command will give a user a warning that can be viewed
               mentionedmember.addRole(guild.roles.find("name","Warning"))
               message.channel.send(sEmoji+" **<@"+mentionedmember.id+"> has been given a warning.**");
               guild.channels.forEach(function(channel){
-                if(channel.name === "logs"){
+                if(channel.name === "🛑logs"){
                   channel.send({"embed": {
                     "description":"Warning",
                     "timestamp": new Date(),
@@ -317,7 +317,7 @@ addcommand("unwarn",["removewarnings","revokewarnings","clearwarnings"],"This co
               })
               message.channel.send(sEmoji+" **<@"+mentionedmember.id+">'s warning has been removed.**");
               guild.channels.forEach(function(channel){
-                if(channel.name === "logs"){
+                if(channel.name === "🛑logs"){
                   channel.send({"embed": {
                     "description":"Warning Removed",
                     "timestamp": new Date(),
@@ -517,7 +517,7 @@ addcommand("unmute",[],"This command unmutes a user who was previously muted.","
               }
             })
             guild.channels.forEach(function(channel){
-              if(channel.name === "logs"){
+              if(channel.name === "🛑logs"){
                 channel.send({"embed": {
                   "description":"Unmute",
                   "timestamp": new Date(),
@@ -654,7 +654,7 @@ addcommand("mute",[],"Prevents the specified user from speaking in text and voic
                         })
                         if(good === true){
                           guild.channels.forEach(function(channel){
-                            if(channel.name === "logs"){
+                            if(channel.name === "🛑logs"){
                               channel.send({"embed": {
                                 "description":"Mute",
                                 "timestamp": new Date(),
@@ -817,7 +817,7 @@ var myInterval = setInterval(function() {
                               boi.send('**Your mute time has run out and you have been unmuted in the server. You may now talk again.**')
                             })
                             guild.channels.forEach(function(channel){
-                              if(channel.name === "logs"){
+                              if(channel.name === "🛑logs"){
                                 channel.send({"embed": {
                                   "description":"Automatic Unmute",
                                   "timestamp": new Date(),
