@@ -90,7 +90,6 @@ addcommand("ban",["bean"],"This command will ban someone from joining the server
                 .catch(() => {
                   guild.ban(mentionedmember,{reason: reason})
                 })
-                message.channel.send(sEmoji+" **<@"+mentionedmember.id+"> has been banned.**");
                 guild.channels.forEach(function(channel){
                   if(channel.name === "🛑mod-logs"){
                     channel.send({"embed": {
@@ -116,12 +115,22 @@ addcommand("ban",["bean"],"This command will ban someone from joining the server
                     }})
                   }
                 });
+                message.channel.send(sEmoji+" **<@"+mentionedmember.id+"> has been banned by moderator <@"+message.author.id+">.**")
+                .then(() => {
+                  message.delete();
+                });
               });
             }else{
               message.channel.send("**"+fEmoji+" You are not able to moderate this user.**")
+              .then((msg) => {
+                msg.delete(3000);
+              });
             }
           }else{
             message.channel.send("**"+fEmoji+" You can't ban the bot.**")
+            .then((msg) => {
+              msg.delete(3000);
+            });
           }
         }else if(mentioneduser){
           if(mentioneduser !== client.user){
@@ -138,7 +147,6 @@ addcommand("ban",["bean"],"This command will ban someone from joining the server
               });
             }
             guild.ban(mentioneduser,{reason: reason})
-            message.channel.send(sEmoji+" **"+mentioneduser.tag+" has been banned.**");
             guild.channels.forEach(function(channel){
               if(channel.name === "🛑mod-logs"){
                 channel.send({"embed": {
@@ -164,12 +172,22 @@ addcommand("ban",["bean"],"This command will ban someone from joining the server
                 }})
               }
             });
+            message.channel.send(sEmoji+" **"+mentioneduser.tag+" has been banned.**")
+            .then(() => {
+              message.delete();
+            });
           }else{
             message.channel.send("**"+fEmoji+" You can't ban the bot.**")
+            .then((msg) => {
+              msg.delete(3000);
+            });
           }
         }
       }).catch(() => {
         message.channel.send(fEmoji+" **Sorry, I can't find that user!**")
+        .then((msg) => {
+          msg.delete(3000);
+        });
       });
     }
   }
@@ -202,7 +220,6 @@ addcommand("kick",[],"This command will kick someone out of the server.","Server
               .catch(() => {
                 mentionedmember.kick()
               })
-              message.channel.send(sEmoji+" **<@"+mentionedmember.id+"> has been kicked.**");
               guild.channels.forEach(function(channel){
                 if(channel.name === "🛑mod-logs"){
                   channel.send({"embed": {
@@ -228,12 +245,22 @@ addcommand("kick",[],"This command will kick someone out of the server.","Server
                   }})
                 }
               });
+              message.channel.send(sEmoji+" **<@"+mentionedmember.id+"> has been kicked by moderator <@"+message.author.id+">.**")
+              .then(() => {
+                message.delete();
+              });
             });
           }else{
             message.channel.send("**"+fEmoji+" You are not able to moderate this user.**")
+            .then((msg) => {
+              msg.delete(3000);
+            });
           }
         }else{
           message.channel.send("**"+fEmoji+" You can't kick the bot.**")
+          .then((msg) => {
+            msg.delete(3000);
+          });
         }
       }
     }
@@ -262,7 +289,6 @@ addcommand("warn",[],"This command will give a user a warning that can be viewed
             mentionedmember.user.createDM().then((boi) => {
               boi.send("**You have been given a warning for [**"+reason+"**]. Don't do it again.**")
               mentionedmember.addRole(guild.roles.find("name","Warning"))
-              message.channel.send(sEmoji+" **<@"+mentionedmember.id+"> has been given a warning.**");
               guild.channels.forEach(function(channel){
                 if(channel.name === "🛑mod-logs"){
                   channel.send({"embed": {
@@ -288,12 +314,22 @@ addcommand("warn",[],"This command will give a user a warning that can be viewed
                   }})
                 }
               });
+              message.channel.send(sEmoji+" **<@"+mentionedmember.id+"> has been given a warning.**")
+              .then(() => {
+                message.delete();
+              });
             });
           }else{
             message.channel.send("**"+fEmoji+" You are not able to moderate this user.**")
+            .then((msg) => {
+              msg.delete(3000);
+            });
           }
         }else{
           message.channel.send("**"+fEmoji+" I did nothing wrong! :(**")
+          .then((msg) => {
+            msg.delete(3000);
+          });
         }
       }
     }
@@ -359,7 +395,6 @@ addcommand("unwarn",["removewarnings","revokewarnings","clearwarnings"],"This co
                   mentionedmember.removeRole(role)
                 }
               })
-              message.channel.send(sEmoji+" **<@"+mentionedmember.id+">'s warning has been removed.**");
               guild.channels.forEach(function(channel){
                 if(channel.name === "🛑mod-logs"){
                   channel.send({"embed": {
@@ -381,12 +416,22 @@ addcommand("unwarn",["removewarnings","revokewarnings","clearwarnings"],"This co
                   }})
                 }
               });
+              message.channel.send(sEmoji+" **<@"+mentionedmember.id+">'s warning has been removed.**")
+              .then(() => {
+                message.delete();
+              });
             });
           }else{
             message.channel.send("**"+fEmoji+" You are not able to moderate this user.**")
+            .then((msg) => {
+              msg.delete(3000);
+            });
           }
         }else{
           message.channel.send("**"+fEmoji+" I don't even have a warning in the first place.**")
+          .then((msg) => {
+            msg.delete(3000);
+          });
         }
       }
     }
@@ -474,6 +519,9 @@ addcommand("commands",["cmds","help","?"],"This command displays all the command
                       guild.fetchMember(message.author).then((theirmember) => {
                         if(!theirmember){
                           message.channel.send(fEmoji+" **Sorry, I can't find you in the server!**")
+                          .then((msg) => {
+                            msg.delete(3000);
+                          });
                         }else{
                           if(theirmember.highestRole.comparePositionTo(guild.roles.find("name",command.minrank)) >= 0){
                             message.channel.send({"embed": {
@@ -496,14 +544,23 @@ addcommand("commands",["cmds","help","?"],"This command displays all the command
                             }})
                           }else{
                             message.channel.send(fEmoji+" **You're not a high enough role to see this command** (requires the *"+command.minrank+"* rank)")
+                            .then((msg) => {
+                              msg.delete(3000);
+                            });
                           }
                         }
                       })
                       .catch(() => {
                         message.channel.send(fEmoji+" **Sorry, I can't find you in the server!**")
+                        .then((msg) => {
+                          msg.delete(3000);
+                        });
                       })
                     }else{
                       message.channel.send(fEmoji+" **Sorry, the required role** (*"+command.minrank+"*) **for this command doesn't exist!**")
+                      .then((msg) => {
+                        msg.delete(3000);
+                      });
                     }
                   }
                 }
@@ -513,6 +570,9 @@ addcommand("commands",["cmds","help","?"],"This command displays all the command
       }
     }else{
       message.channel.send("**"+fEmoji+" This command cannot be used in DMs.**")
+      .then((msg) => {
+        msg.delete(3000);
+      });
     }
 });
 
@@ -580,16 +640,28 @@ addcommand("unmute",[],"This command unmutes a user who was previously muted.","
               }
             });
             message.channel.send("**"+sEmoji+" <@"+mentionedmember.id+"> has been unmuted.**")
+            .then(() => {
+              message.delete();
+            });
           }else{
             message.channel.send("**"+fEmoji+" You are not able to moderate this user.**")
+            .then((msg) => {
+              msg.delete(3000);
+            });
           }
         }
       }else{
         message.channel.send("**"+fEmoji+" This is not a valid user.**")
+        .then((msg) => {
+          msg.delete(3000);
+        });
       }
     }
   }else{
     message.channel.send("**"+fEmoji+" This command cannot be used in DMs.**")
+    .then((msg) => {
+      msg.delete(3000);
+    });
   }
 });
 
@@ -688,6 +760,9 @@ addcommand("mute",[],"Prevents the specified user from speaking in text and voic
                       .catch(() => {
                         good = false;
                         message.channel.send("**"+fEmoji+" There has been an error giving the user the muted role. Please attempt to re-mute them.**")
+                        .then((msg) => {
+                          msg.delete(3000);
+                        });
                       }).then(() => {
                         mentionedmember.user.createDM().then((boi) => {
                           if(displaytime !== "forever"){
@@ -728,32 +803,56 @@ addcommand("mute",[],"Prevents the specified user from speaking in text and voic
                           });
                           if(displaytime !== "forever"){
                             message.channel.send(sEmoji+" The user <@"+mentionedmember.id+"> has been muted for **"+displaytime+"**.")
+                            .then(() => {
+                              message.delete();
+                            });
                           }else{
                             message.channel.send(sEmoji+" The user <@"+mentionedmember.id+"> has been muted **forever**.")
+                            .then(() => {
+                              message.delete();
+                            });
                           }
                         }
                       });
                     }else{
                       message.channel.send(fEmoji+" **The muted role doesn't exist. Please contact mustardfoot to fix this.**")
+                      .then((msg) => {
+                        msg.delete(3000);
+                      });
                     }
                   });
                 });
               }else{
                 message.channel.send("**Something seems to be wrong with the mute database, please contact mustardfoot about this issue.**")
+                .then((msg) => {
+                  msg.delete(3000);
+                });
               }
             });
           }else{
             message.channel.send("**"+fEmoji+" You are not able to moderate this user.**")
+            .then((msg) => {
+              msg.delete(3000);
+            });
           }
         }else{
           message.channel.send("**"+fEmoji+" You can't mute the bot.**")
+          .then((msg) => {
+            msg.delete(3000);
+          });
         }
       }else{
         message.channel.send("**"+fEmoji+" This is not a valid user.**")
+        .then((msg) => {
+          msg.delete(3000);
+        });
       }
     }
   }else{
     message.channel.send("**"+fEmoji+" This command cannot be used in DMs.**")
+    .then((msg) => {
+      msg.delete(3000);
+    });
   }
 });
 
@@ -808,19 +907,31 @@ client.on('message', function(message) {
                 guild.fetchMember(message.author).then((theirmember) => {
                   if(!theirmember){
                     message.channel.send(fEmoji+" **Sorry, I can't find you in the server!**")
+                    .then((msg) => {
+                      msg.delete(3000);
+                    });
                   }else{
                     if(theirmember.highestRole.comparePositionTo(guild.roles.find("name",command.minrank)) >= 0){
                       command.does(args,message);
                     }else{
                       message.channel.send(fEmoji+" **You're not a high enough role to run this command** (requires the *"+command.minrank+"* rank)")
+                      .then((msg) => {
+                        msg.delete(3000);
+                      });
                     }
                   }
                 })
                 .catch(() => {
                   message.channel.send(fEmoji+" **Sorry, I can't find you in the server!**")
+                  .then((msg) => {
+                    msg.delete(3000);
+                  });
                 })
               }else{
                 message.channel.send(fEmoji+" **Sorry, the required role** (*"+command.minrank+"*) **for this command doesn't exist!**")
+                .then((msg) => {
+                  msg.delete(3000);
+                });
               }
             }
           }
