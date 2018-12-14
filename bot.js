@@ -58,18 +58,12 @@ function addcommand(name,aliases,desc,minrank,does){
     commands.push({name:name,aliases:aliases,desc:desc,minrank:minrank,does:does});
 }
 
-addcommand("test",["check"],"This command will respond if the bot is online. A simple test to make sure the bot isn't down.","",function(args,message){
-    message.channel.send(sEmoji+" **The bot is active!**");
-});
-
-addcommand("slowmode",[],"CURRENTLY IN TESTING","Server Moderator",function(args,message){
-  if(message.guild && message.guild === guild){
-    message.channel.edit({"slowMode" : 5})
-    message.channel.send(sEmoji+" slowmode enabled maybe ?????")
-    .then(() => {
-      message.delete();
-    });
-  }
+addcommand("test",["check","ping"],"This command will respond if the bot is online. A simple test to make sure the bot isn't down.","",function(args,message){
+    if(args[0] !== "ping"){
+      message.channel.send(sEmoji+" **The bot is active!**");
+    }else {
+      message.channel.send(sEmoji+" **pong**");
+    }
 });
 
 addcommand("ban",["bean"],"This command will ban someone from joining the server permanently.","Server Moderator",function(args,message){
