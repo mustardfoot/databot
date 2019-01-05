@@ -8,6 +8,28 @@ var fEmoji = "";
 var guild;
 var commands = [];
 
+function iscommand(saidcommand) {
+  var alreadycommanded = false;
+  commands.forEach(function(command){
+    if(alreadycommanded === false){
+      var isalias = false;
+      command.aliases.forEach(function(alias){
+        if(saidcommand === alias){
+          isalias = true;
+        }
+      });
+      if(command.name === saidcommand || isalias === true){
+        alreadycommanded = true;
+      }
+    }
+  });
+  if(alreadycommanded === true){
+    return true
+  }else{
+    return false
+  }
+}
+
 function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
@@ -935,11 +957,14 @@ client.on('ready', () => {
 });
 
 client.on("messageDelete", (messageDelete) => {
-  guild.channels.forEach(function(channel){
-    if(channel.name === "🛑databot-logs"){
-      channel.send("Message sent by "+messageDelete.author.tag+" in <#"+messageDelete.channel.id+"> was deleted:\n"+messageDelete.content)
-    }
-  });
+  var args = messageDelete.content.substring(pref.length).split(" ");
+  if(iscommand(args[0]) === false && messageDelete.author !== client.user){
+    guild.channels.forEach(function(channel){
+      if(channel.name === "🛑databot-logs"){
+        channel.send("Message sent by "+messageDelete.author.tag+" in <#"+messageDelete.channel.id+"> was deleted:\n"+messageDelete.content)
+      }
+    });
+  }
 });
 
 client.on('message', function(message) {
