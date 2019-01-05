@@ -85,16 +85,17 @@ addcommand("purge",["bulkdelete"],"This command will delete the amount of messag
           added = 2
         }
 
-        var found = await message.channel.fetchMessages({limit: args[1]});
-        message.channel.send("**"+found.size+"**" + "messages found, deleting...")
-        .then((msg) => {
-          message.channel.bulkDelete(found)
-          .then(() => {
-            msg.edit("**"+found.size+"**" + "mesages have been purged."+purgemsgs[added])
-            msg.delete(3000);
+        message.channel.fetchMessages({limit: args[1]})
+        .then((found) => {
+          message.channel.send("**"+found.size+"**" + "messages found, deleting...")
+          .then((msg) => {
+            message.channel.bulkDelete(found)
+            .then(() => {
+              msg.edit("**"+found.size+"**" + "mesages have been purged."+purgemsgs[added])
+              msg.delete(3000);
+            });
           });
         });
-
       }else{
         message.channel.send("**"+fEmoji+" Please specify how many messages to delete.**")
         .then((msg) => {
