@@ -912,7 +912,7 @@ client.on('ready', () => {
 client.on("messageDelete", (messageDelete) => {
   guild.channels.forEach(function(channel){
     if(channel.name === "🛑databot-logs"){
-      channel.send("Message sent by "+messageDelete.author.tag+" in <#"+messageDelete.channel.id+"> was deleted:\n\n"+messageDelete.content)
+      channel.send("Message sent by "+messageDelete.author.tag+" in <#"+messageDelete.channel.id+"> was deleted:\n"+messageDelete.content)
     }
   });
 });
