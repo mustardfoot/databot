@@ -90,7 +90,7 @@ addcommand("purge",["bulkdelete"],"This command will delete the amount of messag
             .then((msg) => {
               message.channel.bulkDelete(found)
               .then(() => {
-                msg.edit("**"+found.size+"** " + "mesages have been purged."+purgemsgs[added])
+                msg.edit("**"+found.size+"** " + "messages have been purged."+purgemsgs[added])
                 msg.delete(5000);
               });
             });
