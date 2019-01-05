@@ -74,8 +74,6 @@ addcommand("purge",["bulkdelete"],"This command will delete the amount of messag
       if(args[1] && Number(args[1])){
         args[1] = Math.round(args[1]);
 
-        message.delete();
-
         var added = 0
         if(args[1] > 100){
           args[1] = 100
@@ -84,15 +82,17 @@ addcommand("purge",["bulkdelete"],"This command will delete the amount of messag
           args[1] = 2
           added = 2
         }
-
-        message.channel.fetchMessages({limit: args[1]})
-        .then((found) => {
-          message.channel.send("**"+found.size+"** " + "messages found, deleting...")
-          .then((msg) => {
-            message.channel.bulkDelete(found)
-            .then(() => {
-              msg.edit("**"+found.size+"** " + "mesages have been purged."+purgemsgs[added])
-              msg.delete(5000);
+        message.delete()
+        .then(() => {
+          message.channel.fetchMessages({limit: args[1]})
+          .then((found) => {
+            message.channel.send("**"+found.size+"** " + "messages found, deleting...")
+            .then((msg) => {
+              message.channel.bulkDelete(found)
+              .then(() => {
+                msg.edit("**"+found.size+"** " + "mesages have been purged."+purgemsgs[added])
+                msg.delete(5000);
+              });
             });
           });
         });
