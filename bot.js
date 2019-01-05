@@ -70,7 +70,7 @@ var purgemsgs = [""," *The specified number was above the max of 100, so 100 mes
 
 addcommand("purge",["bulkdelete"],"This command will delete the amount of messages specified in the channel the command was sent in.","Server Moderator",function(args,message){
   if(message.guild && message.guild === guild){
-    if(message.channel && message.channel.name ~= "🛑mod-logs"){
+    if(message.channel && message.channel.name != "🛑mod-logs"){
       if(args[1] && Number(args[1])){
         args[1] = Math.round(args[1]);
 
