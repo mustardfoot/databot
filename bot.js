@@ -59,11 +59,50 @@ function addcommand(name,aliases,desc,minrank,does){
 }
 
 addcommand("test",["check","ping"],"This command will respond if the bot is online. A simple test to make sure the bot isn't down.","",function(args,message){
-    if(args[0] !== "ping"){
+    if(args[0].toLowerCase() !== "ping"){
       message.channel.send(sEmoji+" **The bot is active!**");
     }else {
       message.channel.send(sEmoji+" **pong**");
     }
+});
+
+var purgemsgs = [""," *The specified number was above the max of 100, so 100 messages were purged instead.*"," *The specified number was below the minumum of 2, so 2 messages were purged instead.*"]
+
+addcommand("purge",["bulkdelete"],"This command will delete the amount of messages specified in the channel the command was sent in.","Server Moderator",function(args,message){
+  if(message.guild && message.guild === guild){
+    if(message.channel && message.channel.name ~= "🛑mod-logs"){
+      if(args[1] && Number(args[1])){
+        args[1] = Math.round(args[1]);
+
+        message.delete();
+
+        var added = 0
+        if(args[1] > 100){
+          args[1] = 100
+          added = 1
+        }else if(args[1] < 2){
+          args[1] = 2
+          added = 2
+        }
+
+        var found = await message.channel.fetchMessages({limit: args[1]});
+        message.channel.send("**"+found.size+"**" + "messages found, deleting...")
+        .then((msg) => {
+          message.channel.bulkDelete(found)
+          .then(() => {
+            msg.edit("**"+found.size+"**" + "mesages have been purged."+purgemsgs[added])
+            msg.delete(3000);
+          });
+        });
+
+      }else{
+        message.channel.send("**"+fEmoji+" Please specify how many messages to delete.**")
+        .then((msg) => {
+          msg.delete(3000);
+        });
+      }
+    }
+  }
 });
 
 addcommand("ban",["bean"],"This command will ban someone from joining the server permanently.","Server Moderator",function(args,message){
