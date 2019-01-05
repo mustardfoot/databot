@@ -70,7 +70,7 @@ var purgemsgs = [""," *The specified number was above the max of 100, so 100 mes
 
 addcommand("purge",["bulkdelete"],"This command will delete the amount of messages specified in the channel the command was sent in.","Server Moderator",function(args,message){
   if(message.guild && message.guild === guild){
-    if(message.channel && message.channel.name != "🛑mod-logs"){
+    if(message.channel && message.channel.name !== "🛑mod-logs"){
       if(args[1] && Number(args[1])){
         args[1] = Math.round(args[1]);
 
@@ -92,6 +92,31 @@ addcommand("purge",["bulkdelete"],"This command will delete the amount of messag
               .then(() => {
                 msg.edit("**"+found.size+"** " + "messages have been purged."+purgemsgs[added])
                 msg.delete(5000);
+                guild.channels.forEach(function(channel){
+                  if(channel.name === "🛑mod-logs"){
+                    channel.send({"embed": {
+                      "description":"Purge",
+                      "timestamp": new Date(),
+                      "color": 13632027,
+                      "fields": [
+                        {
+                          "name": "Staff Member",
+                          "value": "<@"+message.author.id+">",
+                          "inline": true
+                        },
+                        {
+                          "name": "Channel",
+                          "value": "<#"+message.channel.id+">",
+                          "inline": true
+                        },
+                        {
+                          "name": "Amount of Messages",
+                          "value": found.size
+                        }
+                      ]
+                    }})
+                  }
+                });
               });
             });
           });
