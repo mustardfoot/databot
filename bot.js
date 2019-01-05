@@ -87,12 +87,12 @@ addcommand("purge",["bulkdelete"],"This command will delete the amount of messag
 
         message.channel.fetchMessages({limit: args[1]})
         .then((found) => {
-          message.channel.send("**"+found.size+"**" + "messages found, deleting...")
+          message.channel.send("**"+found.size+"** " + "messages found, deleting...")
           .then((msg) => {
             message.channel.bulkDelete(found)
             .then(() => {
-              msg.edit("**"+found.size+"**" + "mesages have been purged."+purgemsgs[added])
-              msg.delete(3000);
+              msg.edit("**"+found.size+"** " + "mesages have been purged."+purgemsgs[added])
+              msg.delete(5000);
             });
           });
         });
