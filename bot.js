@@ -961,7 +961,7 @@ client.on("messageDelete", (messageDelete) => {
   if(iscommand(args[0]) === false && messageDelete.author !== client.user){
     guild.channels.forEach(function(channel){
       if(channel.name === "🛑databot-logs"){
-        channel.send("Message sent by "+messageDelete.author.tag+" in <#"+messageDelete.channel.id+"> was deleted:\n"+messageDelete.content)
+        channel.send("Message sent by "+messageDelete.author.tag+" in <#"+messageDelete.channel.id+"> was deleted:\n`"+messageDelete.content+"`")
       }
     });
   }
